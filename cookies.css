@@ -24,3 +24,7 @@ li {
   flex-direction: column;
   font-size: 2em;
 }
+
+.local-storage-container {
+  display: none;
+}

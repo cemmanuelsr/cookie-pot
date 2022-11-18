@@ -4,7 +4,7 @@ function showCookiesForTab(tabs) {
   let gettingAllCookies = browser.cookies.getAll({});
   gettingAllCookies.then((cookies) => {
 
-    let activeTabUrl = document.getElementById('header-title');
+    let activeTabUrl = document.getElementById('header-cookies-title');
     let text = document.createTextNode(`${cookies.length} cookies detected at: ${tab.url}`);
     let firstPartyCookieList = document.getElementById('first-party-cookie-list');
     let thirdPartyCookieList = document.getElementById('third-party-cookie-list');
@@ -62,6 +62,29 @@ function showCookiesForTab(tabs) {
   });
 }
 
+function showStorageForTab(storage) {
+  console.log(storage);
+  if (storage.length > 0) {
+    let activeTabUrl = document.getElementById('header-storage-title');
+    let text = document.createTextNode(`Local Storage has ${storage.length} items`);
+    activeTabUrl.appendChild(text);
+
+    let localStorageList = document.getElementById('local-storage-list');
+    for (let i in storage) {
+      let item = storage[i];
+      console.log(item);
+      let li = document.createElement("li");
+      let content = document.createTextNode(item);
+      li.appendChild(content);
+      localStorageList.appendChild(li);
+    }
+
+    if (localStorageList.children.length > 0) {
+      document.getElementById('local-storage-container').style.display = 'block';
+    }
+  }
+}
+
 function getActiveTab() {
   return browser.tabs.query({ currentWindow: true, active: true });
 }
@@ -77,7 +100,7 @@ browser.contextMenus.onClicked.addListener((info, _) => {
     browser.tabs.executeScript({
       file: "js/getLocalStorage.js"
     }).then((values) => {
-      console.log(values[0][1]);
+      showStorageForTab(values[0]);
     });
   }
 });

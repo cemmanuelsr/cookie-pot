@@ -3,6 +3,7 @@ $(document).ready(function() {
   $("#third-party-cookie-list").toggle();
   $("#session-cookie-list").toggle();
   $("#navigation-cookie-list").toggle();
+  $("#local-storage-list").toggle();
   $("#first-party-cookies-title").click(function() {
     $("#first-party-cookie-list").toggle();
   });
@@ -14,5 +15,8 @@ $(document).ready(function() {
   });
   $("#navigation-cookies-title").click(function() {
     $("#navigation-cookie-list").toggle();
+  });
+  $("#local-storage-title").click(function() {
+    $("#local-storage-list").toggle();
   });
 });
