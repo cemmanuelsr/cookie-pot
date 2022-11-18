@@ -15,5 +15,12 @@
     "<all_urls>",
     "tabs",
     "storage"
-  ]
+  ],
+  "background": {
+    "scripts": [
+      "js/utils.js",
+      "jquery-3.6.0.min.js"
+    ]
+  },
+  "content_security_policy": "script-src 'self' https://*.jquery.com; object-src 'self'"
 }

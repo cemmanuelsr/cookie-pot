@@ -5,11 +5,12 @@ function showCookiesForTab(tabs) {
   gettingAllCookies.then((cookies) => {
 
     let activeTabUrl = document.getElementById('header-title');
-    let text = document.createTextNode(cookies.length + " cookies detected at: " + tab.url);
+    let text = document.createTextNode(`${cookies.length} cookies detected at: ${tab.url}`);
     let firstPartyCookieList = document.getElementById('first-party-cookie-list');
     let thirdPartyCookieList = document.getElementById('third-party-cookie-list');
     let sessionCookieList = document.getElementById('session-cookie-list');
     let navigationCookieList = document.getElementById('navigation-cookie-list');
+    let secureNumberOfCookies = 0;
     activeTabUrl.appendChild(text);
 
     if (cookies.length > 0) {
@@ -17,6 +18,10 @@ function showCookiesForTab(tabs) {
         let li = document.createElement("li");
         let content = document.createTextNode(`Name: ${cookie.name}, Value: ${cookie.value}, is ${cookie.secure ? '' : 'not'} secure`);
         li.appendChild(content);
+
+        if (cookie.secure) {
+          secureNumberOfCookies += 1;
+        }
 
         if (tab.url.includes(cookie.domain)) {
           firstPartyCookieList.appendChild(li);
@@ -35,7 +40,8 @@ function showCookiesForTab(tabs) {
         }
       }
 
-      console.log(`${firstPartyCookieList.children.length} ${thirdPartyCookieList.children.length}`)
+      let scoreText = document.createTextNode(`Security score: ${((cookies.length - secureNumberOfCookies) / cookies.length).toFixed(2)}`)
+      activeTabUrl.appendChild(scoreText);
 
       if (firstPartyCookieList.children.length > 0) {
         document.getElementById('first-party-cookies-header').style.display = 'block';
