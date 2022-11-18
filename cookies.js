@@ -1,39 +1,59 @@
 function showCookiesForTab(tabs) {
-  //get the first tab object in the array
   let tab = tabs.pop();
 
-  //get all cookies in the domain
-  let gettingAllCookies = browser.cookies.getAll({url: tab.url});
+  let gettingAllCookies = browser.cookies.getAll({});
   gettingAllCookies.then((cookies) => {
 
-    //set the header of the panel
     let activeTabUrl = document.getElementById('header-title');
-    let text = document.createTextNode("Cookies at: "+tab.title);
-    let cookieList = document.getElementById('cookie-list');
+    let text = document.createTextNode(cookies.length + " cookies detected at: " + tab.url);
+    let firstPartyCookieList = document.getElementById('first-party-cookie-list');
+    let thirdPartyCookieList = document.getElementById('third-party-cookie-list');
+    let sessionCookieList = document.getElementById('session-cookie-list');
+    let navigationCookieList = document.getElementById('navigation-cookie-list');
     activeTabUrl.appendChild(text);
 
     if (cookies.length > 0) {
-      //add an <li> item with the name and value of the cookie to the list
       for (let cookie of cookies) {
         let li = document.createElement("li");
-        let content = document.createTextNode(cookie.name + ": "+ cookie.value);
+        let content = document.createTextNode(`Name: ${cookie.name}, Value: ${cookie.value}, is ${cookie.secure ? '' : 'not'} secure`);
         li.appendChild(content);
-        cookieList.appendChild(li);
-      }
-    } else {
-      let p = document.createElement("p");
-      let content = document.createTextNode("No cookies in this tab.");
-      let parent = cookieList.parentNode;
 
-      p.appendChild(content);
-      parent.appendChild(p);
+        if (tab.url.includes(cookie.domain)) {
+          firstPartyCookieList.appendChild(li);
+        } else {
+          thirdPartyCookieList.appendChild(li);
+        }
+
+        let clone_li = document.createElement("li");
+        let clone_content = document.createTextNode(`Name: ${cookie.name}, Value: ${cookie.value}, is ${cookie.secure ? '' : 'not'} secure`);
+        clone_li.appendChild(clone_content);
+
+        if (cookie.session) {
+          sessionCookieList.appendChild(clone_li);
+        } else {
+          navigationCookieList.appendChild(clone_li);
+        }
+      }
+
+      console.log(`${firstPartyCookieList.children.length} ${thirdPartyCookieList.children.length}`)
+
+      if (firstPartyCookieList.children.length > 0) {
+        document.getElementById('first-party-cookies-header').style.display = 'block';
+      }
+      if (thirdPartyCookieList.children.length > 0) {
+        document.getElementById('third-party-cookies-header').style.display = 'block';
+      }
+      if (sessionCookieList.children.length > 0) {
+        document.getElementById('session-cookies-header').style.display = 'block';
+      }
+      if (navigationCookieList.children.length > 0) {
+        document.getElementById('navigation-cookies-header').style.display = 'block';
+      }
     }
   });
 }
 
-//get active tab to run an callback function.
-//it sends to our callback an array of tab objects
 function getActiveTab() {
-  return browser.tabs.query({currentWindow: true, active: true});
+  return browser.tabs.query({ currentWindow: true, active: true });
 }
 getActiveTab().then(showCookiesForTab);

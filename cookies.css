@@ -9,3 +9,13 @@ html, body {
 li {
   margin-bottom: 5px;
 }
+
+.panel-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.cookies-section-header {
+  display: none;
+}
+

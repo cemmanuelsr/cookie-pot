@@ -1,20 +1,39 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="cookies.css"/>
-  </head>
 
-  <body>
-    <div class="panel">
-      <div class="panel-section panel-section-header">
-        <div class="text-section-header" id="header-title"></div>
-      </div>
-      <ul id="cookie-list">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="cookies.css" />
+</head>
+
+<body>
+  <div class="panel">
+    <div class="panel-section panel-section-header">
+      <div class="text-section-header" id="header-title"></div>
+    </div>
+    <div class="panel-section cookies-section-header" id="first-party-cookies-header">
+      <h3>First party domain cookies</h3>
+      <ul id="first-party-cookie-list">
       </ul>
     </div>
-    <script src="cookies.js"></script>
-  </body>
+    <div class="panel-section cookies-section-header" id="third-party-cookies-header">
+      <h3>Third party domain cookies</h3>
+      <ul id="third-party-cookie-list">
+      </ul>
+    </div>
+    <div class="panel-section cookies-section-header" id="session-cookies-header">
+      <h3>Session cookies</h3>
+      <ul id="session-cookie-list">
+      </ul>
+    </div>
+    <div class="panel-section cookies-section-header" id="navigation-cookies-header">
+      <h3>Navigation cookies</h3>
+      <ul id="navigation-cookie-list">
+      </ul>
+    </div>
+  </div>
+  <script src="cookies.js"></script>
+</body>
 
 </html>
