@@ -16,7 +16,8 @@ function showCookiesForTab(tabs) {
     if (cookies.length > 0) {
       for (let cookie of cookies) {
         let li = document.createElement("li");
-        let content = document.createTextNode(`Name: ${cookie.name}, Value: ${cookie.value}, is ${cookie.secure ? '' : 'not'} secure`);
+        li.style.color = cookie.secure ? 'green' : 'red';
+        let content = document.createTextNode(`${cookie.name} - ${cookie.domain}`);
         li.appendChild(content);
 
         if (cookie.secure) {
@@ -30,7 +31,8 @@ function showCookiesForTab(tabs) {
         }
 
         let clone_li = document.createElement("li");
-        let clone_content = document.createTextNode(`Name: ${cookie.name}, Value: ${cookie.value}, is ${cookie.secure ? '' : 'not'} secure`);
+        clone_li.style.color = cookie.secure ? 'green' : 'red';
+        let clone_content = document.createTextNode(`${cookie.name} - ${cookie.domain}`);
         clone_li.appendChild(clone_content);
 
         if (cookie.session) {
@@ -64,3 +66,19 @@ function getActiveTab() {
   return browser.tabs.query({ currentWindow: true, active: true });
 }
 getActiveTab().then(showCookiesForTab);
+
+browser.contextMenus.create({
+  id: "get-local-storage",
+  title: "Get Local Storage"
+});
+
+browser.contextMenus.onClicked.addListener((info, _) => {
+  if (info.menuItemId === "get-local-storage") {
+    browser.tabs.executeScript({
+      file: "js/getLocalStorage.js"
+    }).then((values) => {
+      console.log(values[0][1]);
+    });
+  }
+});
+
