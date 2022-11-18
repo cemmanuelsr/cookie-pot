@@ -40,6 +40,7 @@ function showCookiesForTab(tabs) {
         }
       }
 
+      activeTabUrl.appendChild(document.createElement("br"));
       let scoreText = document.createTextNode(`Security score: ${((cookies.length - secureNumberOfCookies) / cookies.length).toFixed(2)}`)
       activeTabUrl.appendChild(scoreText);
 

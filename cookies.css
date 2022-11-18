@@ -19,8 +19,8 @@ li {
   display: none;
 }
 
-.header-title {
+.text-section-header {
   display: flex;
   flex-direction: column;
-  font-size: 0.5 rem;
+  font-size: 2em;
 }
