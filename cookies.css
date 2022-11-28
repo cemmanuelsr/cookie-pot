@@ -28,3 +28,7 @@ li {
 .local-storage-container {
   display: none;
 }
+
+.network-container {
+  display: none;
+}
