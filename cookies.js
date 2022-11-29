@@ -1,25 +1,36 @@
 async function showCookiesForTab(tabs) {
   let tab = tabs.pop();
 
+  let activeTabUrl = document.getElementById('header-cookies-title');
   let gettingAllCookies = browser.cookies.getAll({});
   let cookiesScore;
+  let firstPartCookies = 0;
+  let sessionCookies = 0;
+  let secureNumberOfCookies = 0;
+  let quantCookies = 0;
   await gettingAllCookies.then((cookies) => {
-
-    let activeTabUrl = document.getElementById('header-cookies-title');
-    let text = document.createTextNode(`${cookies.length} cookies detected`);
-    let secureNumberOfCookies = 0;
-    activeTabUrl.appendChild(text);
+    quantCookies = cookies.length;
 
     if (cookies.length > 0) {
       for (let cookie of cookies) {
         if (cookie.secure) {
           secureNumberOfCookies += 1;
         }
+        if (cookie.session) {
+          sessionCookies += 1;
+        }
+        if (tab.url.includes(cookie.domain)) {
+          firstPartCookies += 1;
+        }
       }
     }
 
     cookiesScore = cookies.length > 0 ? secureNumberOfCookies / cookies.length : 0.5;
   });
+
+
+  let text = document.createTextNode(`Detected ${firstPartCookies} first party cookies, ${quantCookies - firstPartCookies} third party cookies, ${sessionCookies} session cookies, ${quantCookies - sessionCookies} navigation cookies`);
+  activeTabUrl.appendChild(text);
 
   return cookiesScore;
 }
