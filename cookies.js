@@ -61,7 +61,7 @@ async function getThirdPartyConnections() {
 function calculateScore(cookiesScore, storageScore, connectionScore) {
   console.log(cookiesScore, storageScore, connectionScore);
   let activeTabUrl = document.getElementById('average-score');
-  let averageScore = Math.pow(cookiesScore * storageScore * connectionScore, 1 / 3);
+  let averageScore = Math.pow(cookiesScore * cookiesScore * storageScore * storageScore * connectionScore, 1 / 5);
   if (averageScore <= 0.3) {
     activeTabUrl.style.color = 'red';
   } else if (averageScore <= 0.7) {
