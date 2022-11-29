@@ -1,13 +1,12 @@
 html, body {
   width: 500px;
+  background-color: rgba(40,44,52,255);
 }
 
 .panel {
   padding: 5px;
-}
-
-li {
-  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-section {
@@ -15,20 +14,11 @@ li {
   flex-direction: column;
 }
 
-.cookies-section-header {
-  display: none;
-}
-
 .text-section-header {
   display: flex;
   flex-direction: column;
-  font-size: 2em;
+  font-size: 1.5em;
+  color: white;
+  font-weight: bold;
 }
 
-.local-storage-container {
-  display: none;
-}
-
-.network-container {
-  display: none;
-}
